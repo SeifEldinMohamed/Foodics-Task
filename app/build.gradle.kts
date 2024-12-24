@@ -92,7 +92,6 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.coroutines)
     implementation(libs.koin.compose.viewmodel)
-    // Added
     implementation(libs.koin.annotation)
     ksp(libs.koin.ksp.compiler)
 }
