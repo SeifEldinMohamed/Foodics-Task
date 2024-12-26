@@ -1,4 +1,4 @@
-package com.example.foodicstask.ui.theme
+package com.example.foodicstask.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -15,31 +15,38 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = light_onPrimary,
     secondary = light_secondary,
     onSecondary = light_onSecondary,
+    tertiary = light_tertiary,
+    onTertiary = light_onTertiary,
     error = light_error,
     onError = light_onError,
     background = light_background,
     onBackground = light_onBackground,
     surface = light_surface,
     onSurface = light_onSurface,
+    surfaceVariant = light_surface_variant,
+    onSurfaceVariant = light_onSurface_variant
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = light_primary,
-    onPrimary = light_onPrimary,
-    secondary = light_secondary,
-    onSecondary = light_onSecondary,
-    error = light_error,
-    onError = light_onError,
-    background = light_background,
-    onBackground = light_onBackground,
-    surface = light_surface,
-    onSurface = light_onSurface,
+    primary = dark_primary,
+    onPrimary = dark_onPrimary,
+    secondary = dark_secondary,
+    onSecondary = dark_onSecondary,
+    tertiary = dark_tertiary,
+    onTertiary = dark_onTertiary,
+    error = dark_error,
+    onError = dark_onError,
+    background = dark_background,
+    onBackground = dark_onBackground,
+    surface = dark_surface,
+    onSurface = dark_onSurface,
+    surfaceVariant = dark_surface_variant,
+    onSurfaceVariant = dark_onSurface_variant
 )
 @Composable
 fun FoodicsTaskTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -55,6 +62,7 @@ fun FoodicsTaskTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
+        shapes = Shapes
     )
 }

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Foodics Task</string>
+    <string name="screen_title_tables">Tables</string>
+    <string name="screen_title_orders">Orders</string>
+    <string name="screen_title_menu">Menu</string>
+    <string name="screen_title_settings">Settigns</string>
+    <string name="search_for_products_or_categories_hint">Search for products and categories</string>
+    <string name="menu_screen">Menu Screen</string>
+    <string name="orders_screen">Orders Screen</string>
+    <string name="settings_screen">Settings Screen</string>
 </resources>

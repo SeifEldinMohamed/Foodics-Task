@@ -1,4 +1,4 @@
-package com.example.foodicstask.ui.theme
+package com.example.foodicstask.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -44,5 +44,20 @@ val Typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
     ),
 )

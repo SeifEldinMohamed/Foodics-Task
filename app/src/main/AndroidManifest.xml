@@ -13,10 +13,10 @@
         android:theme="@style/Theme.FoodicsTask"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.FoodicsTask">
+            android:theme="@style/Theme.FoodicsTask"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
