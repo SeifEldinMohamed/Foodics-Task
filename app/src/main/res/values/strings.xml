@@ -1,11 +1,39 @@
 <resources>
     <string name="app_name">Foodics Task</string>
-    <string name="screen_title_tables">Tables</string>
-    <string name="screen_title_orders">Orders</string>
+
+    // tables screen
     <string name="screen_title_menu">Menu</string>
-    <string name="screen_title_settings">Settigns</string>
     <string name="search_for_products_or_categories_hint">Search for products and categories</string>
+    <string name="price">Price:</string>
+    <string name="price_with_SAR_currency">%1$s SAR</string>
     <string name="menu_screen">Menu Screen</string>
+    <string name="screen_title_tables">Tables</string>
     <string name="orders_screen">Orders Screen</string>
+
+    // orders screen
+    <string name="screen_title_orders">Orders</string>
+
+    // settings screen
     <string name="settings_screen">Settings Screen</string>
+    <string name="screen_title_settings">Settings</string>
+
+    // error Section
+    <string name="something_went_wrong">Something went wrong…</string>
+    <string name="alien_blocking_your_signal">An alien is probably blocking your signal.</string>
+    <string name="retry">RETRY</string>
+
+    // exception messages
+    <string name="no_internet_connection_exception_message">Please check your internet connection.</string>
+    <string name="timeout_exception_message">Timeout, Check Your Internet Connection</string>
+    <string name="request_timeout_exception_message">Request timed out. Please try again later.</string>
+    <string name="service_unreachable_exception_message">Service is currently unavailable. Please try again later.</string>
+    <string name="server_exception_message">An unexpected error occurred on the server.</string>
+    <string name="bad_request_exception_message">Your request was invalid. Please check your input and try again.</string>
+    <string name="unknown_exception_message">We are working on this issue.</string>
+    <string name="unauthorized_exception_message">You are not authorized to access this resource.</string>
+    <string name="not_found_exception_message">The requested resource was not found.</string>
+    <string name="database_exception_message">Can\'t save your FoodItem!</string>
+    <string name="no_resul_found">No result found</string>
+
+
 </resources>
