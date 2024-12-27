@@ -1,4 +1,4 @@
-package com.example.foodicstask.presentation.screens.utils
+package com.example.foodicstask.presentation.utils
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
