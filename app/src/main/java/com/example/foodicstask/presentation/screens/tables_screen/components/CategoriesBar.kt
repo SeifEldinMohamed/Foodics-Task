@@ -14,11 +14,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
+import com.example.foodicstask.presentation.screens.tables_screen.preview_data.fakeCategoryListUiModel
 import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 
 @Composable
-fun CategoriesTabs() {
-    val tabs = listOf("Breakfast", "Lunch", "Dinner", "Sweets", "Ice", "Label")
+fun CategoriesTabs(
+    categoryList: List<CategoryUiModel>,
+    onCategorySelected: (selectedIndex:Int) -> Unit
+) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     ScrollableTabRow(
@@ -34,13 +38,16 @@ fun CategoriesTabs() {
             )
         }
     ) {
-        tabs.forEachIndexed { index, tab ->
+        categoryList.forEachIndexed { index, categoryUiModel ->
             Tab(
                 selected = selectedTabIndex == index,
-                onClick = { selectedTabIndex = index },
+                onClick = {
+                    selectedTabIndex = index
+                    onCategorySelected(selectedTabIndex)
+                          },
                 text = {
                     Text(
-                        text = tab,
+                        text = categoryUiModel.name,
                         style = if (selectedTabIndex == index) MaterialTheme.typography.titleSmall else MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -54,6 +61,9 @@ fun CategoriesTabs() {
 @Composable
 fun PreviewCategoriesTabs() {
     FoodicsTaskTheme {
-        CategoriesTabs()
+        CategoriesTabs(
+            categoryList = fakeCategoryListUiModel,
+            onCategorySelected = {}
+        )
     }
 }
