@@ -87,7 +87,6 @@ dependencies {
 
     // koin
     implementation(libs.koin.android)
-
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
@@ -95,4 +94,16 @@ dependencies {
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.annotation)
     ksp(libs.koin.ksp.compiler)
+
+    // ktor
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.ktor.client.okhttp)
+
 }
