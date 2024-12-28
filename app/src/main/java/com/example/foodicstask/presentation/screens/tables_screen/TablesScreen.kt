@@ -1,5 +1,6 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,6 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -29,27 +34,31 @@ import com.example.foodicstask.presentation.screens.tables_screen.components.Cat
 import com.example.foodicstask.presentation.screens.tables_screen.components.FoodItem
 import com.example.foodicstask.presentation.screens.tables_screen.components.ViewOrderButton
 import com.example.foodicstask.presentation.screens.tables_screen.components.shimmer_animation.AnimateShimmerCategoriesBar
+import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
+import com.example.foodicstask.presentation.screens.tables_screen.model.FoodItemUiModel
 import com.example.foodicstask.presentation.utils.getGridCellsCount
 import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun TablesScreen(
-    windowSize: WindowSizeClass
+    windowSize: WindowSizeClass,
 ) {
     val tablesViewModel = koinViewModel<TablesViewModel>()
     val tablesUiState = tablesViewModel.tablesScreenUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        tablesViewModel.requestFoodList()
+        tablesViewModel.requestTablesScreenData()
     }
     TablesContent(
         tablesUiState = tablesUiState.value,
         searchQuery = "",
         gridCellsCount = windowSize.getGridCellsCount(),
         onQueryChanged = {},
-        onCategorySelected = {},
-        onRefreshButtonClicked = { tablesViewModel.requestFoodList() }
+        onCategorySelected = { selectedCategoryId ->
+            tablesViewModel.filterFoodsByCategory(selectedCategoryId)
+        },
+        onRefreshButtonClicked = { tablesViewModel.requestTablesScreenData() }
     )
 }
 
@@ -59,10 +68,20 @@ fun TablesContent(
     searchQuery: String,
     gridCellsCount: Int,
     onQueryChanged: (String) -> Unit,
-    onCategorySelected: (selectedIndex:Int) -> Unit,
-    onRefreshButtonClicked: () -> Unit
+    onCategorySelected: (selectedIndex: Int) -> Unit,
+    onRefreshButtonClicked: () -> Unit,
 ) {
     val insets = WindowInsets.ime
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+
+    val categoriesList = remember(tablesUiState) {
+        when (tablesUiState) {
+            is TablesScreenUiState.FetchedTableData -> tablesUiState.categoryList
+            is TablesScreenUiState.FilteredFoodsByCategory -> tablesUiState.categoriesList
+            is TablesScreenUiState.LoadingFoodList -> tablesUiState.categoriesList
+            else -> emptyList()
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -71,13 +90,23 @@ fun TablesContent(
             query = searchQuery,
             onQueryChanged = onQueryChanged
         )
+        if (categoriesList.isNotEmpty()) {
+            CategoriesTabs(
+                categoryList = categoriesList,
+                onCategorySelected = onCategorySelected,
+                selectedTabIndex = selectedTabIndex,
+                onSelectedTabIndex = {
+                    selectedTabIndex = it
+                }
+            )
+        }
 
         when (tablesUiState) {
             is TablesScreenUiState.EmptyState -> {
                 EmptySection()
             }
 
-            is TablesScreenUiState.Loading -> {
+            is TablesScreenUiState.LoadingScreen -> {
                 if (tablesUiState.isLoading) {
                     Spacer(modifier = Modifier.height(8.dp))
                     AnimateShimmerCategoriesBar()
@@ -87,39 +116,26 @@ fun TablesContent(
             }
 
             is TablesScreenUiState.FetchedTableData -> {
-                CategoriesTabs(
-                    categoryList = tablesUiState.categoryList,
-                    onCategorySelected = onCategorySelected
+                FoodListSection(
+                    tablesUiState.foodList,
+                    insets,
+                    gridCellsCount,
                 )
+            }
 
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(gridCellsCount),
-                    contentPadding = PaddingValues(4.dp),
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    itemsIndexed(tablesUiState.foodList) { index, foodItem ->
-                        FoodItem(
-                            index = index,
-                            foodItemUiModel = foodItem,
-                            countFoodItemInCart = 0,
-                            onFoodCardClick = {}
-                        )
-                    }
-                    item {
-                        Spacer(
-                            modifier = Modifier.height(
-                                (insets.asPaddingValues()
-                                    .calculateBottomPadding()) / 2
-                            )
-                        )
-                    }
+            is TablesScreenUiState.FilteredFoodsByCategory -> {
+                FoodListSection(
+                    tablesUiState.filteredFoodList,
+                    insets,
+                    gridCellsCount,
+                )
+            }
+
+            is TablesScreenUiState.LoadingFoodList -> {
+                if (tablesUiState.isLoading) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    AnimateShimmerFoodList(gridCellsCount)
                 }
-
-                ViewOrderButton(
-                    onClick = {},
-                )
             }
 
             is TablesScreenUiState.ApiError -> {
@@ -135,8 +151,45 @@ fun TablesContent(
                     customDatabaseExceptionUiModel = tablesUiState.customDatabaseExceptionUiModel
                 )
             }
+
         }
     }
+}
+
+@Composable
+fun ColumnScope.FoodListSection(
+    foodList: List<FoodItemUiModel>,
+    insets: WindowInsets,
+    gridCellsCount: Int,
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(gridCellsCount),
+        contentPadding = PaddingValues(4.dp),
+        modifier = Modifier
+            .weight(1f)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        itemsIndexed(foodList) { index, foodItem ->
+            FoodItem(
+                index = index,
+                foodItemUiModel = foodItem,
+                countFoodItemInCart = 0,
+                onFoodCardClick = {}
+            )
+        }
+        item {
+            Spacer(
+                modifier = Modifier.height(
+                    (insets.asPaddingValues()
+                        .calculateBottomPadding()) / 2
+                )
+            )
+        }
+    }
+
+    ViewOrderButton(
+        onClick = {},
+    )
 }
 
 @PreviewLightDark
@@ -145,7 +198,7 @@ fun TablesContent(
 fun PreviewTablesScreen() {
     FoodicsTaskTheme {
         TablesContent(
-            tablesUiState = TablesScreenUiState.Loading(isLoading = true),
+            tablesUiState = TablesScreenUiState.LoadingScreen(isLoading = true),
             searchQuery = "",
             gridCellsCount = 2,
             onQueryChanged = {},
