@@ -10,5 +10,5 @@ data class FoodItemEntity(
     val description: String,
     val image: String,
     val price: Float,
-    val category: CategoryEntity
+    val categoryId:Int
 )
