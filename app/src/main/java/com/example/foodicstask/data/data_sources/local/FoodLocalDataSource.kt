@@ -19,5 +19,8 @@ class FoodLocalDataSource (
     suspend fun getAllFoodItems(): List<FoodItemEntity> {
         return foodDao.getAllFoodItems()
     }
+    suspend fun filterFoodsByCategory(selectedCategoryId:Int): List<FoodItemEntity> {
+        return foodDao.filterFoodsByCategory(selectedCategoryId)
+    }
 
 }

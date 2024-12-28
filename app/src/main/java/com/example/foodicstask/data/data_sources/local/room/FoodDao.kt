@@ -22,4 +22,7 @@ interface FoodDao {
     @Query("SELECT * FROM food_items")
     suspend fun getAllFoodItems(): List<FoodItemEntity>
 
+    @Query("SELECT * FROM food_items WHERE categoryid = :selectedCategoryId")
+    suspend fun filterFoodsByCategory(selectedCategoryId: Int): List<FoodItemEntity>
+
 }
