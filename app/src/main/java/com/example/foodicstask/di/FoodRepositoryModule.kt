@@ -8,7 +8,7 @@ import com.example.foodicstask.domain.usecase.FetchFoodListUseCase
 import org.koin.dsl.module
 
 val foodRepositoryModule = module {
-    single<FoodRepository> { FoodRepositoryImpl(get()) }
+    single<FoodRepository> { FoodRepositoryImpl(get(), get()) }
     single<FetchFoodListUseCase> { FetchFoodListUseCase(get()) }
     single<FetchCategoriesListUseCase> { FetchCategoriesListUseCase(get()) }
 }
