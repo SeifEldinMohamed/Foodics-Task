@@ -23,7 +23,7 @@ lottieCompose = "6.0.0"
 coroutinesAndroid = "1.8.0"
 room = "2.6.1"
 ktor = "3.0.1"
-
+gson = "2.10.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -87,6 +87,9 @@ ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-conte
 ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+
+#gson
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 
 [plugins]

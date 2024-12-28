@@ -113,4 +113,7 @@ dependencies {
     testImplementation(libs.ktor.client.mock)
     testImplementation(libs.ktor.client.okhttp)
 
+    // gson
+    implementation(libs.gson)
+
 }
