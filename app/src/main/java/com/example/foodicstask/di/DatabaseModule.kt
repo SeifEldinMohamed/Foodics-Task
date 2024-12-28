@@ -12,7 +12,9 @@ val databaseModule = module {
             androidContext(),
             FoodDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     single { get<FoodDatabase>().foodDao() }
