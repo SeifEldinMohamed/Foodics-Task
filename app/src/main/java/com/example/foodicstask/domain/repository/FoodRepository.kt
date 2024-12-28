@@ -6,4 +6,5 @@ import com.example.foodicstask.domain.model.FoodItemDomainModel
 interface FoodRepository {
     suspend fun fetchFoodList(): List<FoodItemDomainModel>
     suspend fun fetchCategoryList(): List<CategoryDomainModel>
+    suspend fun filteredFoodListByCategory(selectedCategoryId: Int): List<FoodItemDomainModel>
 }

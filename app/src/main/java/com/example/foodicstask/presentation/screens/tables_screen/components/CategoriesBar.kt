@@ -7,10 +7,6 @@ import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,10 +16,11 @@ import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 
 @Composable
 fun CategoriesTabs(
+    selectedTabIndex: Int,
     categoryList: List<CategoryUiModel>,
-    onCategorySelected: (selectedIndex:Int) -> Unit
+    onCategorySelected: (selectedIndex: Int) -> Unit,
+    onSelectedTabIndex: (selectedIndex: Int) -> Unit,
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
@@ -42,9 +39,11 @@ fun CategoriesTabs(
             Tab(
                 selected = selectedTabIndex == index,
                 onClick = {
-                    selectedTabIndex = index
-                    onCategorySelected(selectedTabIndex)
-                          },
+                    if (selectedTabIndex != index) {
+                        onCategorySelected(index)
+                    }
+                    onSelectedTabIndex(index)
+                },
                 text = {
                     Text(
                         text = categoryUiModel.name,
@@ -63,7 +62,9 @@ fun PreviewCategoriesTabs() {
     FoodicsTaskTheme {
         CategoriesTabs(
             categoryList = fakeCategoryListUiModel,
-            onCategorySelected = {}
+            onCategorySelected = {},
+            selectedTabIndex = 0,
+            onSelectedTabIndex = {}
         )
     }
 }
