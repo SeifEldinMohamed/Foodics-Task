@@ -6,23 +6,29 @@ import com.example.foodicstask.domain.model.exceptions.CustomExceptionDomainMode
 import com.example.foodicstask.domain.usecase.FetchCategoriesListUseCase
 import com.example.foodicstask.domain.usecase.FetchFoodListUseCase
 import com.example.foodicstask.domain.usecase.FilteredFoodListByCategoryUseCase
+import com.example.foodicstask.domain.usecase.SearchFoodListByNameUseCase
 import com.example.foodicstask.presentation.mapper.toCategoryUiModel
 import com.example.foodicstask.presentation.mapper.toCustomApiExceptionUiModel
 import com.example.foodicstask.presentation.mapper.toCustomDatabaseExceptionUiModel
 import com.example.foodicstask.presentation.mapper.toFoodItemUIModel
 import com.example.foodicstask.presentation.model.CustomApiExceptionUiModel
 import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
+import com.example.foodicstask.presentation.screens.tables_screen.model.FoodItemUiModel
 import com.example.foodicstask.presentation.utils.DispatcherProvider
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class TablesViewModel(
     private val fetchFoodListUseCase: FetchFoodListUseCase,
     private val filteredFoodListByCategoryUseCase: FilteredFoodListByCategoryUseCase,
+    private val searchFoodListByNameUseCase: SearchFoodListByNameUseCase,
     private val fetchCategoriesListUseCase: FetchCategoriesListUseCase,
     private val dispatcher: DispatcherProvider,
 ) : ViewModel() {
@@ -30,6 +36,10 @@ class TablesViewModel(
     private val _tablesScreenUiState: MutableStateFlow<TablesScreenUiState> = MutableStateFlow(TablesScreenUiState.LoadingScreen(isLoading = false))
     val tablesScreenUiState: StateFlow<TablesScreenUiState> = _tablesScreenUiState.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private var originalFoodList: List<FoodItemUiModel> = emptyList()
     private var categoriesList: List<CategoryUiModel> = emptyList<CategoryUiModel>()
 
     fun requestTablesScreenData() {
@@ -50,7 +60,7 @@ class TablesViewModel(
                     foodList = foodListUiModel,
                     categoryList = categoryListUiModel
                 )
-
+                originalFoodList = foodListUiModel
                 categoriesList = categoryListUiModel
 
             } catch (e: Exception) {
@@ -71,10 +81,43 @@ class TablesViewModel(
                 }
                 _tablesScreenUiState.value = TablesScreenUiState.LoadingFoodList(isLoading = false, categoriesList = categoriesList)
                 _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(filteredFoodList = filteredFoodList, categoriesList)
-
+                originalFoodList = filteredFoodList
             } catch (e: Exception) {
                 handleCustomException(e)
             }
+        }
+    }
+    
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+    }
+
+    @OptIn(FlowPreview::class)
+    fun observeSearchQuery() {
+        viewModelScope.launch(dispatcher.io) {
+            _searchQuery
+                .debounce(500) // Waits for 500 milliseconds of inactivity before emitting the latest query.
+                .distinctUntilChanged() // Ensures the flow emits only new queries, ignoring repeated values.
+                .collect { query ->
+                    if (query.isEmpty()) {
+                        _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(filteredFoodList = originalFoodList, categoriesList)
+
+                    } else {
+                        try {
+                            val searchedFoods = searchFoodListByNameUseCase(name = query)
+                            if (searchedFoods.isEmpty()) {
+                                _tablesScreenUiState.value = TablesScreenUiState.EmptySearchState
+                            } else {
+                                _tablesScreenUiState.value = TablesScreenUiState.SearchedFoodsByName(
+                                    searchedFoodList = searchedFoods.map { it.toFoodItemUIModel() },
+                                    categoriesList = categoriesList
+                                )
+                            }
+                        } catch (e:Exception) {
+                            handleCustomException(e)
+                        }
+                    }
+                }
         }
     }
 

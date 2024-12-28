@@ -54,4 +54,13 @@ class FoodRepositoryImpl(
             throw e
         }
     }
+
+    override suspend fun searchFoodListByName(name: String): List<FoodItemDomainModel> {
+        return try {
+            val filteredFoodList = foodLocalDataSource.searchFoodsByName(name)
+            filteredFoodList.map { it.toFoodItemDomainModel() }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

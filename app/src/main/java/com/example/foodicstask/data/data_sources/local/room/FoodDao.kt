@@ -25,4 +25,8 @@ interface FoodDao {
     @Query("SELECT * FROM food_items WHERE categoryid = :selectedCategoryId")
     suspend fun filterFoodsByCategory(selectedCategoryId: Int): List<FoodItemEntity>
 
+    // Find rows where the name contains the substring provided in :name ( lower to make search case-insensitive)
+    @Query("SELECT * FROM food_items WHERE LOWER(name) LIKE '%' || Lower(:name) || '%'")
+    suspend fun searchFoodsByName(name: String): List<FoodItemEntity>
+
 }
