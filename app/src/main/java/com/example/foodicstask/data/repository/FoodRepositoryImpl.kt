@@ -45,4 +45,13 @@ class FoodRepositoryImpl(
             throw e
         }
     }
+
+    override suspend fun filteredFoodListByCategory(selectedCategoryId: Int): List<FoodItemDomainModel> {
+        return try {
+            val filteredFoodList = foodLocalDataSource.filterFoodsByCategory(selectedCategoryId)
+            filteredFoodList.map { it.toFoodItemDomainModel() }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

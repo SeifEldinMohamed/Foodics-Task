@@ -9,7 +9,7 @@ val fakeFoodItemUiModel = FoodItemUiModel(
     description = "Fluffy pancakes with maple syrup",
     image = "https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg",
     price = 33.7f,
-    categoryUiModel = CategoryUiModel(id = 1, name = "Breakfast")
+    categoryId = 1
 )
 
 val fakeCategoryListUiModel = listOf(
