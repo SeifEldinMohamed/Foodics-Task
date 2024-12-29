@@ -1,4 +1,4 @@
-package com.example.foodicstask.di
+package com.example.foodicstask.di.repository
 
 
 import com.example.foodicstask.data.repository.FoodRepositoryImpl
