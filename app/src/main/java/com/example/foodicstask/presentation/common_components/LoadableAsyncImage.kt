@@ -1,8 +1,5 @@
 package com.example.foodicstask.presentation.common_components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +34,7 @@ fun LoadableAsyncImage(
     placeholderResId: Int? = null,
     placeholderContentScale: ContentScale = ContentScale.Inside,
 ) {
-    var isLoading by rememberSaveable(model) { mutableStateOf(true) }
+    var isLoading by remember { mutableStateOf(true) }
 
     Box(
         modifier = modifier,
@@ -48,14 +45,18 @@ fun LoadableAsyncImage(
             model = model,
             contentDescription = contentDescription,
             contentScale = contentScale,
-            onSuccess = { isLoading = false },
+            onSuccess = {
+                isLoading = false
+            },
+            onLoading = {
+                isLoading = true
+            },
+            onError = {
+                isLoading = false
+            }
         )
 
-        AnimatedVisibility(
-            visible = isLoading,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
+        if (isLoading) {
             if (placeholderResId != null) {
                 Image(
                     modifier = Modifier.fillMaxSize(),

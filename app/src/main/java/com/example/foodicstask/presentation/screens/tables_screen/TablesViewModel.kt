@@ -2,27 +2,37 @@ package com.example.foodicstask.presentation.screens.tables_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foodicstask.domain.model.CartItemDomainModel
 import com.example.foodicstask.domain.model.exceptions.CustomExceptionDomainModel
 import com.example.foodicstask.domain.usecase.FetchCategoriesListUseCase
 import com.example.foodicstask.domain.usecase.FetchFoodListUseCase
 import com.example.foodicstask.domain.usecase.FilteredFoodListByCategoryUseCase
 import com.example.foodicstask.domain.usecase.SearchFoodListByNameUseCase
-import com.example.foodicstask.presentation.mapper.toCategoryUiModel
-import com.example.foodicstask.presentation.mapper.toCustomApiExceptionUiModel
-import com.example.foodicstask.presentation.mapper.toCustomDatabaseExceptionUiModel
-import com.example.foodicstask.presentation.mapper.toFoodItemUIModel
+import com.example.foodicstask.domain.usecase.cart.AddItemToCartUseCase
+import com.example.foodicstask.domain.usecase.cart.ClearCartUseCase
+import com.example.foodicstask.domain.usecase.cart.GetAllCartItemsUseCase
+import com.example.foodicstask.presentation.mapper.cart.toCartItemDomainModel
+import com.example.foodicstask.presentation.mapper.category.toCategoryUiModel
+import com.example.foodicstask.presentation.mapper.exception.toCustomApiExceptionUiModel
+import com.example.foodicstask.presentation.mapper.exception.toCustomDatabaseExceptionUiModel
+import com.example.foodicstask.presentation.mapper.cart.toCartItemUiModel
+import com.example.foodicstask.presentation.mapper.food.toFoodItemUIModel
 import com.example.foodicstask.presentation.model.CustomApiExceptionUiModel
+import com.example.foodicstask.presentation.screens.tables_screen.model.CartItemUiModel
 import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
 import com.example.foodicstask.presentation.screens.tables_screen.model.FoodItemUiModel
 import com.example.foodicstask.presentation.utils.DispatcherProvider
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class TablesViewModel(
@@ -31,18 +41,24 @@ class TablesViewModel(
     private val searchFoodListByNameUseCase: SearchFoodListByNameUseCase,
     private val fetchCategoriesListUseCase: FetchCategoriesListUseCase,
     private val dispatcher: DispatcherProvider,
+    getAllCartItemsUseCase: GetAllCartItemsUseCase,
+    private val addItemToCartUseCase: AddItemToCartUseCase,
+    private val clearCartUseCase: ClearCartUseCase
 ) : ViewModel() {
 
-    private val _tablesScreenUiState: MutableStateFlow<TablesScreenUiState> = MutableStateFlow(TablesScreenUiState.LoadingScreen(isLoading = false))
+    private val _tablesScreenUiState: MutableStateFlow<TablesScreenUiState> =
+        MutableStateFlow(TablesScreenUiState.LoadingScreen(isLoading = false))
     val tablesScreenUiState: StateFlow<TablesScreenUiState> = _tablesScreenUiState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
     private var originalFoodList: List<FoodItemUiModel> = emptyList()
-    private var categoriesList: List<CategoryUiModel> = emptyList<CategoryUiModel>()
+    private var categoriesList: List<CategoryUiModel> = emptyList()
 
-    fun requestTablesScreenData() {
+    val cartItems: Flow<List<CartItemUiModel>> = getAllCartItemsUseCase().map { it.map { cartItemDomainModel -> cartItemDomainModel.toCartItemUiModel() } }
+
+    fun loadFoodAndCategoriesData() {
         _tablesScreenUiState.value = TablesScreenUiState.LoadingScreen(isLoading = true)
         viewModelScope.launch(dispatcher.io) {
             try {
@@ -70,24 +86,37 @@ class TablesViewModel(
     }
 
     fun filterFoodsByCategory(selectedCategoryId: Int) {
-        _tablesScreenUiState.value = TablesScreenUiState.LoadingFoodList(isLoading = true, categoriesList = categoriesList)
+        _tablesScreenUiState.value =
+            TablesScreenUiState.LoadingFoodList(isLoading = true, categoriesList = categoriesList)
         viewModelScope.launch(dispatcher.io) {
-        delay(1000L)
+            delay(1000L)
             try {
-                val filteredFoodList = if (selectedCategoryId == 0){
-                    fetchFoodListUseCase().map { it.toFoodItemUIModel() }
-                } else {
-                    filteredFoodListByCategoryUseCase(selectedCategoryId).map { it.toFoodItemUIModel() }
+                val filteredFoodList =
+                    if (selectedCategoryId == 0) {
+                        fetchFoodListUseCase().map { it.toFoodItemUIModel() }
+                    } else {
+                        filteredFoodListByCategoryUseCase(selectedCategoryId).map { it.toFoodItemUIModel() }
+                    }
+                _tablesScreenUiState.value = TablesScreenUiState.LoadingFoodList(
+                    isLoading = false,
+                    categoriesList = categoriesList
+                )
+                if (filteredFoodList.isEmpty()){
+                    _tablesScreenUiState.value = TablesScreenUiState.EmptyState
                 }
-                _tablesScreenUiState.value = TablesScreenUiState.LoadingFoodList(isLoading = false, categoriesList = categoriesList)
-                _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(filteredFoodList = filteredFoodList, categoriesList)
-                originalFoodList = filteredFoodList
+                else {
+                    _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(
+                        filteredFoodList = filteredFoodList,
+                        categoriesList = categoriesList
+                    )
+                    originalFoodList = filteredFoodList
+                }
             } catch (e: Exception) {
                 handleCustomException(e)
             }
         }
     }
-    
+
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
     }
@@ -96,28 +125,58 @@ class TablesViewModel(
     fun observeSearchQuery() {
         viewModelScope.launch(dispatcher.io) {
             _searchQuery
-                .debounce(500) // Waits for 500 milliseconds of inactivity before emitting the latest query.
-                .distinctUntilChanged() // Ensures the flow emits only new queries, ignoring repeated values.
+                .debounce(500)
+                .distinctUntilChanged()
                 .collect { query ->
                     if (query.isEmpty()) {
-                        _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(filteredFoodList = originalFoodList, categoriesList)
-
+                        _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(
+                            filteredFoodList = originalFoodList,
+                            categoriesList
+                        )
                     } else {
                         try {
                             val searchedFoods = searchFoodListByNameUseCase(name = query)
                             if (searchedFoods.isEmpty()) {
-                                _tablesScreenUiState.value = TablesScreenUiState.EmptySearchState
+                                _tablesScreenUiState.value = TablesScreenUiState.EmptyState
                             } else {
-                                _tablesScreenUiState.value = TablesScreenUiState.SearchedFoodsByName(
-                                    searchedFoodList = searchedFoods.map { it.toFoodItemUIModel() },
-                                    categoriesList = categoriesList
-                                )
+                                _tablesScreenUiState.value =
+                                    TablesScreenUiState.SearchedFoodsByName(
+                                        searchedFoodList = searchedFoods.map { foodItemDomainModel ->
+                                            foodItemDomainModel.toFoodItemUIModel()
+                                        },
+                                        categoriesList = categoriesList
+                                    )
                             }
-                        } catch (e:Exception) {
+                        } catch (e: Exception) {
                             handleCustomException(e)
                         }
                     }
                 }
+        }
+    }
+
+    fun addItemToCart(foodItem: FoodItemUiModel) {
+        viewModelScope.launch(dispatcher.io) {
+            cartItems.firstOrNull()?.let { currentCartItems ->
+                val existingItem = currentCartItems.find { it.id == foodItem.id }
+
+                val cartItem = existingItem?.copy(quantity = existingItem.quantity + 1)?.toCartItemDomainModel()
+                    ?: CartItemDomainModel(
+                        id = foodItem.id,
+                        name = foodItem.name,
+                        price = foodItem.price,
+                        quantity = 1,
+                    )
+
+                addItemToCartUseCase(cartItem)
+            }
+        }
+    }
+
+
+    fun clearCart() {
+        viewModelScope.launch(dispatcher.io) {
+            clearCartUseCase()
         }
     }
 

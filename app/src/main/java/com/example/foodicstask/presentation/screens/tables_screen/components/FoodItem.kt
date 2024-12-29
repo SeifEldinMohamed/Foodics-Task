@@ -38,10 +38,9 @@ import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 
 @Composable
 fun FoodItem(
-    index: Int,
     foodItemUiModel: FoodItemUiModel,
-    countFoodItemInCart: Int,
-    onFoodCardClick: (index: Int) -> Unit
+    quantityInCart: Int,
+    onFoodCardClick: (FoodItemUiModel) -> Unit,
 ) {
     Box(
         modifier = Modifier.padding(12.dp)
@@ -50,7 +49,7 @@ fun FoodItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    onFoodCardClick(index)
+                    onFoodCardClick(foodItemUiModel)
                 },
             elevation = CardDefaults.cardElevation(4.dp),
             colors = CardDefaults.cardColors(
@@ -64,7 +63,7 @@ fun FoodItem(
                         .crossfade(true)
                         .build(),
                     placeholderResId = R.drawable.ic_food_placeholder,
-                    contentDescription = "Food Image",
+                    contentDescription = foodItemUiModel.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,7 +90,9 @@ fun FoodItem(
                     textAlign = TextAlign.Start
                 )
                 Row(
-                    Modifier.fillMaxWidth().padding(start = 8.dp, bottom = 8.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, bottom = 8.dp),
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Text(
@@ -100,7 +101,10 @@ fun FoodItem(
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Text(
-                        text = stringResource(R.string.price_with_SAR_currency, foodItemUiModel.price),
+                        text = stringResource(
+                            R.string.price_with_SAR_currency,
+                            foodItemUiModel.price
+                        ),
                         style = MaterialTheme.typography.bodySmall.copy(fontWeight = Bold),
                         color = MaterialTheme.colorScheme.secondary
                     )
@@ -108,7 +112,7 @@ fun FoodItem(
             }
         }
 
-        if (countFoodItemInCart > 0)
+        if (quantityInCart > 0)
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -121,7 +125,7 @@ fun FoodItem(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = countFoodItemInCart.toString(),
+                    text = quantityInCart.toString(),
                     color = Color.White,
                     style = MaterialTheme.typography.labelMedium,
                     maxLines = 1,
@@ -136,10 +140,9 @@ fun FoodItem(
 fun PreviewFoodCard() {
     FoodicsTaskTheme {
         FoodItem(
-            index = 1,
             foodItemUiModel = fakeFoodItemUiModel,
-            countFoodItemInCart = 1,
-            onFoodCardClick =  {}
+            quantityInCart = 1,
+            onFoodCardClick = {}
         )
     }
 }

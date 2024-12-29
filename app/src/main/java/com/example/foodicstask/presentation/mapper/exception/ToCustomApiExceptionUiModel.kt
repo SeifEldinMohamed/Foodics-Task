@@ -1,4 +1,4 @@
-package com.example.foodicstask.presentation.mapper
+package com.example.foodicstask.presentation.mapper.exception
 
 import com.example.foodicstask.domain.model.exceptions.CustomApiExceptionDomainModel
 import com.example.foodicstask.presentation.model.CustomApiExceptionUiModel

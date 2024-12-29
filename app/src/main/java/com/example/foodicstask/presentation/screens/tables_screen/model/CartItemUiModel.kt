@@ -1,11 +1,8 @@
 package com.example.foodicstask.presentation.screens.tables_screen.model
 
-data class FoodItemUiModel(
+data class CartItemUiModel(
     val id: Int,
     val name: String,
-    val description: String,
-    val image: String,
     val price: Float,
-    val categoryId: Int,
-    var countInCart:Int
+    val quantity: Int,
 )

@@ -21,8 +21,7 @@ fun AnimateShimmerCategoriesBar() {
     LazyRow(
         modifier = Modifier
             .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-        ,
+            .fillMaxWidth(),
     ) {
         items(8) {
             CategoryBarItemShimmer(brush)

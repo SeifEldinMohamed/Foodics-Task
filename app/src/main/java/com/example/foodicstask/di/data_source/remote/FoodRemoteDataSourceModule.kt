@@ -1,4 +1,4 @@
-package com.example.foodicstask.di
+package com.example.foodicstask.di.data_source.remote
 
 
 import com.example.foodicstask.data.data_sources.remote.FoodRemoteDataSource
