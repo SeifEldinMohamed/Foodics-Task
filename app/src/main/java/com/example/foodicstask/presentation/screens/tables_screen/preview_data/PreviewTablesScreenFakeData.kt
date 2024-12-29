@@ -9,7 +9,23 @@ val fakeFoodItemUiModel = FoodItemUiModel(
     description = "Fluffy pancakes with maple syrup",
     image = "https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg",
     price = 33.7f,
-    categoryId = 1
+    categoryId = 1,
+    countInCart = 4
+)
+
+val fakeFoodItemUiModel2 = FoodItemUiModel(
+    id = 2,
+    name = "pancakes",
+    description = "Fluffy pancakes with maple syrup",
+    image = "https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg",
+    price = 33.7f,
+    categoryId = 1,
+    countInCart = 0
+)
+
+val fakeFoodItemListUiModel = listOf(
+    fakeFoodItemUiModel,
+    fakeFoodItemUiModel2
 )
 
 val fakeCategoryListUiModel = listOf(

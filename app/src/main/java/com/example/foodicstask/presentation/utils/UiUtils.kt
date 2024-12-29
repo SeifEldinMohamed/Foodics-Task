@@ -5,6 +5,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import java.util.Locale
 
 fun WindowSizeClass.getGridCellsCount(): Int {
     val gridCellsCountInPhones = 2
@@ -22,4 +23,8 @@ fun WindowSizeClass.getTopPadding(): Dp {
         true -> 16.dp
         false -> 0.dp
     }
+}
+
+fun Double.toTwoDecimalPlaces(): Double {
+    return String.format(Locale.getDefault(),"%.2f", this).toDouble()
 }
