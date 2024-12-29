@@ -6,5 +6,6 @@ data class FoodItemDomainModel(
     val description:String,
     val image:String,
     val price: Float,
-    val categoryId:Int
+    val categoryId:Int,
+    val countInCart:Int = 0
 )

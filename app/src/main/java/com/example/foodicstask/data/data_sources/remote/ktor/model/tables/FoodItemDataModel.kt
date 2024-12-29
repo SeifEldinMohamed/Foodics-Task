@@ -1,4 +1,4 @@
-package com.example.foodicstask.data.data_sources.remote.ktor.model.food_list
+package com.example.foodicstask.data.data_sources.remote.ktor.model.tables
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

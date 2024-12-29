@@ -7,4 +7,5 @@ data class FoodItemUiModel(
     val image: String,
     val price: Float,
     val categoryId: Int,
+    var countInCart:Int
 )
