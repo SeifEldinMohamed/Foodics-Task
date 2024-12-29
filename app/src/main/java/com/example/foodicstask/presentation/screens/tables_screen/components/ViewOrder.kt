@@ -25,19 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.foodicstask.R
 import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 
 @Composable
 fun ViewOrderButton(
+    totalCount:String,
+    totalPrice: String,
     modifier: Modifier = Modifier, onClick: () -> Unit
 ) {
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surface)
-            .padding(horizontal = 8.dp).padding(top = 8.dp)
+            .padding(horizontal = 8.dp)
+            .padding(top = 8.dp)
             .navigationBarsPadding()
     ) {
         Button(
@@ -68,7 +73,7 @@ fun ViewOrderButton(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "05",
+                            text = totalCount,
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold
@@ -87,7 +92,7 @@ fun ViewOrderButton(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "SAR 1234.00",
+                        text = stringResource(R.string.price_with_SAR_currency, totalPrice),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
@@ -111,6 +116,10 @@ fun ViewOrderButton(
 @Composable
 fun PreviewViewOrderButton() {
     FoodicsTaskTheme {
-        ViewOrderButton(onClick = {})
+        ViewOrderButton(
+            totalCount = "5",
+            totalPrice = "1460.50",
+            onClick = {}
+        )
     }
 }

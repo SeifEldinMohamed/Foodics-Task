@@ -2,8 +2,8 @@ package com.example.foodicstask.presentation.screens.tables_screen.components.sh
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.example.foodicstask.presentation.utils.prepareShimmerBrush
 
 @Composable
-fun AnimateShimmerFoodList(
+fun ColumnScope.AnimateShimmerFoodList(
     gridCellsCount: Int
 ) {
     val brush = prepareShimmerBrush()
     LazyVerticalGrid(
         modifier = Modifier
-            .fillMaxSize(),
+            .weight(1f),
         columns = GridCells.Fixed(gridCellsCount)
     ) {
         items(12) {
