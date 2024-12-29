@@ -29,4 +29,9 @@ interface FoodDao {
     @Query("SELECT * FROM food_items WHERE LOWER(name) LIKE '%' || Lower(:name) || '%'")
     suspend fun searchFoodsByName(name: String): List<FoodItemEntity>
 
+    @Query("UPDATE food_items SET countInCart = :newCount WHERE id = :foodItemId")
+    suspend fun updateFoodItemCount(foodItemId: Int, newCount: Int)
+
+    @Query("UPDATE food_items SET countInCart = 0")
+    suspend fun clearAllFoodItemCounts()
 }
