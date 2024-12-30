@@ -37,7 +37,8 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 val currentNavigationBarDestination =
-                    navController.currentBackStackEntryAsState().value.currentDestinationFromNavigationBar(enumValues<NavigationMenuItem>().map { it.screen })
+                    navController.currentBackStackEntryAsState().value.currentDestinationFromNavigationBar(
+                        enumValues<NavigationMenuItem>().map { it.screen })
 
                 Scaffold(
                     modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
@@ -90,7 +91,8 @@ private fun NavHostController.singleTopNavigate(screen: Screens) {
         popUpTo(graph.findStartDestination().id) {
             saveState = true
         }
-        launchSingleTop = true // Avoid multiple copies of the same destination when reselecting the same item
+        launchSingleTop =
+            true // Avoid multiple copies of the same destination when reselecting the same item
         restoreState = true   // Restore state when reselecting a previously selected item
     }
 }
