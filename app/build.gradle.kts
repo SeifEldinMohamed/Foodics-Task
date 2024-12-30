@@ -101,6 +101,8 @@ dependencies {
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.annotation)
     ksp(libs.koin.ksp.compiler)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit4)
 
     // ktor
     implementation(platform(libs.ktor.bom))

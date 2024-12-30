@@ -6,5 +6,5 @@ import com.example.foodicstask.data.data_sources.remote.ktor.KtorHttpClient
 import org.koin.dsl.module
 
 val foodRemoteDataSourceModule = module {
-    single { FoodRemoteDataSource(KtorHttpClient().get()) }
+    single<FoodRemoteDataSource> { FoodRemoteDataSource(KtorHttpClient().get()) }
 }
