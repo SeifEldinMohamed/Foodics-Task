@@ -10,6 +10,16 @@
     <string name="screen_title_tables">Tables</string>
     <string name="orders_screen">Orders Screen</string>
 
+    // tables screen test tags
+    <string name="test_tag_food_item">TestTagFoodItem_%1$s</string>
+    <string name="test_tag_empty_section">TestTagEmptySection</string>
+    <string name="test_tag_shimmer_food_list">TestTagShimmerFoodsList</string>
+    <string name="test_tag_shimmer_categories_bar">TestTagShimmerCategoriesList</string>
+    <string name="test_tag_error_section">TestTagErrorSection</string>
+    <string name="test_tag_searchbar_textfield">TestTagSearchBar</string>
+    <string name="test_tag_category_item">TestTagCategoryItem_%1$s</string>
+
+
     // orders screen
     <string name="screen_title_orders">Orders</string>
 
@@ -32,8 +42,12 @@
     <string name="unknown_exception_message">We are working on this issue.</string>
     <string name="unauthorized_exception_message">You are not authorized to access this resource.</string>
     <string name="not_found_exception_message">The requested resource was not found.</string>
-    <string name="database_exception_message">Can\'t save your FoodItem!</string>
+    <string name="database_exception_message">Problem occurred while saving your data.</string>
     <string name="no_resul_found">No result found</string>
+    <string name="test_tag_clear_cart">TestTagClearCart</string>
+    <string name="test_tag_cart_quantity">TestTagCartQuantity</string>
+    <string name="test_tag_cart_total_price">TestTagCartTotalPrice</string>
+    <string name="view_order">View order</string>
 
 
 </resources>

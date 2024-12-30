@@ -1,3 +1,4 @@
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -12,6 +13,7 @@ import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -41,11 +43,11 @@ fun TablesScreen(
     val tablesViewModel = koinViewModel<TablesViewModel>()
     val tablesUiState = tablesViewModel.tablesScreenUiState.collectAsStateWithLifecycle()
     val searchQuery by tablesViewModel.searchQuery.collectAsStateWithLifecycle()
-    val cartItems by tablesViewModel.cartItems.collectAsStateWithLifecycle(initialValue = emptyList())
+    val cartItems by tablesViewModel.getCartItems()
+        .collectAsStateWithLifecycle(initialValue = emptyList())
 
     LaunchedEffect(Unit) {
         tablesViewModel.loadFoodAndCategoriesData()
-        tablesViewModel.observeSearchQuery()
     }
 
     TablesContent(
@@ -71,15 +73,16 @@ fun TablesScreen(
 
 @Composable
 fun TablesContent(
+    modifier: Modifier = Modifier,
     tablesUiState: TablesScreenUiState,
     searchQuery: String,
     cartItems: List<CartItemUiModel>,
     gridCellsCount: Int,
     onQueryChanged: (String) -> Unit,
-    onCategorySelected: (selectedIndex: Int) -> Unit,
+    onCategorySelected: (selectedCategoryId: Int) -> Unit,
     onRefreshButtonClicked: () -> Unit,
     onFoodCardClick: (foodItem: FoodItemUiModel) -> Unit,
-    onClearCart: () -> Unit
+    onClearCart: () -> Unit,
 ) {
     val insets = WindowInsets.ime
     var selectedTabIndex by remember { mutableIntStateOf(0) }
@@ -111,101 +114,103 @@ fun TablesContent(
         totalPrice = cartItems.sumOf { (it.price * it.quantity).toDouble() }
     }
 
-
-    Column(
-        modifier = Modifier.fillMaxSize()
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
-        SearchBar(
-            query = searchQuery,
-            onQueryChanged = onQueryChanged
-        )
-        if (categoriesList.isNotEmpty()) {
-            CategoriesTabs(
-                categoryList = categoriesList,
-                onCategorySelected = {
-                    onCategorySelected(it)
-                },
-                selectedTabIndex = selectedTabIndex,
-                onSelectedTabIndex = {
-                    selectedTabIndex = it
-                }
+        Column {
+            SearchBar(
+                query = searchQuery,
+                onQueryChanged = onQueryChanged
             )
-        }
-
-        when (tablesUiState) {
-            is TablesScreenUiState.EmptyState -> {
-                EmptySection()
-            }
-
-            is TablesScreenUiState.LoadingScreen -> {
-                if (tablesUiState.isLoading) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    AnimateShimmerCategoriesBar()
-                    Spacer(modifier = Modifier.height(8.dp))
-                    AnimateShimmerFoodList(gridCellsCount)
-                }
-            }
-
-            is TablesScreenUiState.FetchedTableData -> {
-                FoodListSection(
-                    foodList = foodList,
-                    cartItems = cartItems,
-                    insets = insets,
-                    gridCellsCount = gridCellsCount,
-                    onFoodCardClick = {
-                        onFoodCardClick(it)
+            if (categoriesList.isNotEmpty()) {
+                CategoriesTabs(
+                    categoryList = categoriesList,
+                    onCategorySelected = {
+                        onCategorySelected(it)
+                    },
+                    selectedTabIndex = selectedTabIndex,
+                    onSelectedTabIndex = {
+                        selectedTabIndex = it
                     }
                 )
             }
 
-            is TablesScreenUiState.LoadingFoodList -> {
-                if (tablesUiState.isLoading) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    AnimateShimmerFoodList(gridCellsCount)
+            when (tablesUiState) {
+                is TablesScreenUiState.EmptyState -> {
+                    EmptySection()
                 }
-            }
 
-            is TablesScreenUiState.FilteredFoodsByCategory -> {
-                FoodListSection(
-                    foodList = foodList,
-                    insets = insets,
-                    gridCellsCount = gridCellsCount,
-                    onFoodCardClick = {
-                        onFoodCardClick(it)
-                    },
-                    cartItems = cartItems
-                )
-            }
+                is TablesScreenUiState.LoadingScreen -> {
+                    if (tablesUiState.isLoading) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        AnimateShimmerCategoriesBar()
+                        Spacer(modifier = Modifier.height(8.dp))
+                        AnimateShimmerFoodList(gridCellsCount)
+                    }
+                }
 
-            is TablesScreenUiState.SearchedFoodsByName -> {
-                FoodListSection(
-                    foodList = foodList,
-                    insets = insets,
-                    gridCellsCount = gridCellsCount,
-                    onFoodCardClick = {
-                        onFoodCardClick(it)
-                    },
-                    cartItems = cartItems
-                )
-            }
+                is TablesScreenUiState.FetchedTableData -> {
+                    FoodListSection(
+                        foodList = foodList,
+                        cartItems = cartItems,
+                        insets = insets,
+                        gridCellsCount = gridCellsCount,
+                        onFoodCardClick = {
+                            onFoodCardClick(it)
+                        }
+                    )
+                }
 
-            is TablesScreenUiState.ApiError -> {
-                ErrorSection(
-                    onRefreshButtonClicked = onRefreshButtonClicked,
-                    customApiErrorExceptionUiModel = tablesUiState.customApiErrorExceptionUiModel
-                )
-            }
+                is TablesScreenUiState.LoadingFoodList -> {
+                    if (tablesUiState.isLoading) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AnimateShimmerFoodList(gridCellsCount)
+                    }
+                }
 
-            is TablesScreenUiState.DatabaseError -> {
-                ErrorSection(
-                    onRefreshButtonClicked = onRefreshButtonClicked,
-                    customDatabaseExceptionUiModel = tablesUiState.customDatabaseExceptionUiModel
-                )
-            }
+                is TablesScreenUiState.FilteredFoodsByCategory -> {
+                    FoodListSection(
+                        foodList = foodList,
+                        insets = insets,
+                        gridCellsCount = gridCellsCount,
+                        onFoodCardClick = {
+                            onFoodCardClick(it)
+                        },
+                        cartItems = cartItems
+                    )
+                }
 
+                is TablesScreenUiState.SearchedFoodsByName -> {
+                    FoodListSection(
+                        foodList = foodList,
+                        insets = insets,
+                        gridCellsCount = gridCellsCount,
+                        onFoodCardClick = {
+                            onFoodCardClick(it)
+                        },
+                        cartItems = cartItems
+                    )
+                }
+
+                is TablesScreenUiState.ApiError -> {
+                    ErrorSection(
+                        onRefreshButtonClicked = onRefreshButtonClicked,
+                        customApiErrorExceptionUiModel = tablesUiState.customApiErrorExceptionUiModel
+                    )
+                }
+
+                is TablesScreenUiState.DatabaseError -> {
+                    ErrorSection(
+                        onRefreshButtonClicked = onRefreshButtonClicked,
+                        customDatabaseExceptionUiModel = tablesUiState.customDatabaseExceptionUiModel
+                    )
+                }
+
+            }
         }
 
         ViewOrderButton(
+            modifier = Modifier.align(Alignment.BottomCenter),
             totalCount = totalCount.toString(),
             totalPrice = totalPrice.toTwoDecimalPlaces().toString(),
             onClick = {
@@ -213,6 +218,7 @@ fun TablesContent(
             },
         )
     }
+
 }
 
 @PreviewLightDark

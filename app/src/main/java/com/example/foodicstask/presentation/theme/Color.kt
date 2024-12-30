@@ -24,16 +24,15 @@ val light_surface_variant = Color(0xFFEEEEF1)
 val light_onSurface_variant = Color(0xFF888888)
 
 val LightGray = Color(0xFF929292)
-val Gray = Color(0xFFe5e5ea)
+val White = Color(0xFFFFFFFF)
 val LightGreen = Color(0xFF31B057)
-val Red = Color(0xFFFF0000)
 val DarkRed = Color(0xFFC50000)
-val LightRed = Color(0xFFFE0A58)
+val DarkGray = Color(0xFF141414)
 
 val dark_primary = Color(0xFF212121)
 val dark_onPrimary = Color(0xFFF7F7F7)
 
-val dark_secondary = Color(0xFF011277)
+val dark_secondary = Color(0xFF0C2297)
 val dark_onSecondary = Color(0xFFF7F7F7)
 
 val dark_tertiary = Color(0xFF148931)

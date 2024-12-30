@@ -15,10 +15,10 @@ class FoodRemoteDataSource(
     private val client: HttpClient,
 ) : FoodApi {
     override suspend fun fetchFoodList(): List<FoodItemDataModel> {
-        return try {
-            client.get {
-                url(PRODUCTS_ENDPOINT)
-            }.body<List<FoodItemDataModel>>()
+         return try {
+             client.get {
+                 url(PRODUCTS_ENDPOINT)
+             }.body<List<FoodItemDataModel>>()
         } catch (e: Exception) {
             throw e.toCustomApiExceptionDomainModel()
         }

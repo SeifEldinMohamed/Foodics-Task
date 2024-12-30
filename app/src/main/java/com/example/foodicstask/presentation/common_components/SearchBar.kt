@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,9 +26,10 @@ import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 @Composable
 fun SearchBar(
     query: String,
-    onQueryChanged: (String) -> Unit
+    onQueryChanged: (String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
+
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChanged,
@@ -43,7 +45,8 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .testTag(stringResource(R.string.test_tag_searchbar_textfield)),
         maxLines = 1,
         singleLine = true,
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },

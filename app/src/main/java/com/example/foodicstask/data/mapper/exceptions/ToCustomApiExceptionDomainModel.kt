@@ -1,6 +1,5 @@
 package com.example.foodicstask.data.mapper.exceptions
 
-import android.util.Log
 import com.example.foodicstask.domain.model.exceptions.CustomApiExceptionDomainModel
 import com.example.foodicstask.domain.model.exceptions.CustomExceptionDomainModel
 import io.ktor.client.call.NoTransformationFoundException
@@ -21,7 +20,6 @@ fun Throwable.toCustomApiExceptionDomainModel(): CustomExceptionDomainModel {
 
         is ClientRequestException -> {
             // Represents client-side errors, such as invalid requests (e.g., incorrect parameters, missing headers) (4xx error)
-            Log.d("API Exceptions", "ClientRequestException: ${this.response.status.description}")
             when (this.response.status) {
                 BadRequest -> CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.BadRequestExceptionDomainModel)
                 Unauthorized -> CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.UnauthorizedExceptionDomainModel)
@@ -32,7 +30,6 @@ fun Throwable.toCustomApiExceptionDomainModel(): CustomExceptionDomainModel {
 
         is ServerResponseException -> {
             // Represents server-side errors, such as internal server errors, service unavailable (5xx error)
-            Log.d("API Exceptions", "ServerResponseException: ${this.response.status.description}")
             when (this.response.status) {
                 InternalServerError -> CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.InternalServerErrorExceptionDomainModel)
                 ServiceUnavailable -> CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.ServiceUnavailableExceptionDomainModel)
@@ -42,33 +39,25 @@ fun Throwable.toCustomApiExceptionDomainModel(): CustomExceptionDomainModel {
 
         is RedirectResponseException -> {
             // Represents issues with handling HTTP redirects. (3xx error)
-            Log.d(
-                "API Exceptions",
-                "RedirectResponseException: ${this.response.status.description}"
-            )
             CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.RedirectExceptionDomainModel)
         }
 
         is HttpRequestTimeoutException -> {
             // Represents cases where the request timed out before a response was received.
-            Log.d("API Exceptions", "HttpRequestTimeoutException: ${this.localizedMessage}")
             CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.TimeoutExceptionDomainModel)
         }
 
         is NoTransformationFoundException -> {
             // Transformation/parsing issue (e.g., response type mismatch)
-            Log.d("API Exceptions", "NoTransformationFoundException: ${this.localizedMessage}")
             CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.ParsingExceptionDomainModel)
         }
 
         is IOException -> {
             // Networking error (e.g., no internet connection, network timeout)
-            Log.d("API Exceptions", "IOException: ${this.localizedMessage}")
             CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.NetworkExceptionDomainModel)
         }
 
         else -> {
-            Log.d("API Exceptions", "UnknownException: ${this.localizedMessage}")
             CustomExceptionDomainModel.Api(CustomApiExceptionDomainModel.UnknownExceptionDomainModel)
         }
     }
