@@ -10,8 +10,7 @@ fun FoodItemDomainModel.toFoodItemUIModel(): FoodItemUiModel {
         description = this.description,
         image = this.image,
         price = this.price,
-        categoryId = this.categoryId,
-        countInCart = this.countInCart
+        categoryId = this.categoryId
     )
 }
 

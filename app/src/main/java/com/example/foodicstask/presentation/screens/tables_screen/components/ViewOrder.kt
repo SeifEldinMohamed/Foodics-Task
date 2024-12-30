@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,16 +34,15 @@ import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
 
 @Composable
 fun ViewOrderButton(
-    totalCount:String,
+    totalCount: String,
     totalPrice: String,
-    modifier: Modifier = Modifier, onClick: () -> Unit
+    modifier: Modifier = Modifier, onClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 8.dp)
             .padding(top = 8.dp)
-            .navigationBarsPadding()
     ) {
         Button(
             onClick = onClick,
@@ -73,6 +72,7 @@ fun ViewOrderButton(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
+                            modifier = Modifier.testTag(stringResource(R.string.test_tag_cart_quantity)),
                             text = totalCount,
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.bodyMedium,
@@ -83,7 +83,7 @@ fun ViewOrderButton(
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = "View order",
+                        text = stringResource(R.string.view_order),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
@@ -92,6 +92,7 @@ fun ViewOrderButton(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
+                        modifier = Modifier.testTag(stringResource(R.string.test_tag_cart_total_price)),
                         text = stringResource(R.string.price_with_SAR_currency, totalPrice),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium,
@@ -102,7 +103,7 @@ fun ViewOrderButton(
 
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = "Proceed",
+                        contentDescription = null,
                         tint = Color.White
                     )
                 }

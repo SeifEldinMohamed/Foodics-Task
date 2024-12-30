@@ -18,8 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.foodicstask.R
 import com.example.foodicstask.presentation.utils.prepareShimmerBrush
 
 @Composable
@@ -29,7 +32,8 @@ fun ColumnScope.AnimateShimmerFoodList(
     val brush = prepareShimmerBrush()
     LazyVerticalGrid(
         modifier = Modifier
-            .weight(1f),
+            .weight(1f)
+            .testTag(stringResource(R.string.test_tag_shimmer_food_list)),
         columns = GridCells.Fixed(gridCellsCount)
     ) {
         items(12) {

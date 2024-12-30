@@ -33,7 +33,7 @@ val LightRed = Color(0xFFFE0A58)
 val dark_primary = Color(0xFF212121)
 val dark_onPrimary = Color(0xFFF7F7F7)
 
-val dark_secondary = Color(0xFF011277)
+val dark_secondary = Color(0xFF0C2297)
 val dark_onSecondary = Color(0xFFF7F7F7)
 
 val dark_tertiary = Color(0xFF148931)

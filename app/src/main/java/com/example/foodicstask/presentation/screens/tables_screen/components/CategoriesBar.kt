@@ -8,8 +8,11 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.foodicstask.R
 import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
 import com.example.foodicstask.presentation.screens.tables_screen.preview_data.fakeCategoryListUiModel
 import com.example.foodicstask.presentation.theme.FoodicsTaskTheme
@@ -37,10 +40,11 @@ fun CategoriesTabs(
     ) {
         categoryList.forEachIndexed { index, categoryUiModel ->
             Tab(
+                modifier = Modifier.testTag(stringResource(R.string.test_tag_category_item, index)),
                 selected = selectedTabIndex == index,
                 onClick = {
                     if (selectedTabIndex != index) {
-                        onCategorySelected(index)
+                        onCategorySelected(categoryUiModel.id)
                     }
                     onSelectedTabIndex(index)
                 },

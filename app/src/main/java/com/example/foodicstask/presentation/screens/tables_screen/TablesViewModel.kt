@@ -1,5 +1,6 @@
 package com.example.foodicstask.presentation.screens.tables_screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodicstask.domain.model.CartItemDomainModel
@@ -22,6 +23,7 @@ import com.example.foodicstask.presentation.screens.tables_screen.model.CartItem
 import com.example.foodicstask.presentation.screens.tables_screen.model.CategoryUiModel
 import com.example.foodicstask.presentation.screens.tables_screen.model.FoodItemUiModel
 import com.example.foodicstask.presentation.utils.DispatcherProvider
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -41,9 +43,9 @@ class TablesViewModel(
     private val searchFoodListByNameUseCase: SearchFoodListByNameUseCase,
     private val fetchCategoriesListUseCase: FetchCategoriesListUseCase,
     private val dispatcher: DispatcherProvider,
-    getAllCartItemsUseCase: GetAllCartItemsUseCase,
+    private val getAllCartItemsUseCase: GetAllCartItemsUseCase,
     private val addItemToCartUseCase: AddItemToCartUseCase,
-    private val clearCartUseCase: ClearCartUseCase
+    private val clearCartUseCase: ClearCartUseCase,
 ) : ViewModel() {
 
     private val _tablesScreenUiState: MutableStateFlow<TablesScreenUiState> =
@@ -56,11 +58,22 @@ class TablesViewModel(
     private var originalFoodList: List<FoodItemUiModel> = emptyList()
     private var categoriesList: List<CategoryUiModel> = emptyList()
 
-    val cartItems: Flow<List<CartItemUiModel>> = getAllCartItemsUseCase().map { it.map { cartItemDomainModel -> cartItemDomainModel.toCartItemUiModel() } }
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        handleCustomException(exception)
+    }
+
+    init {
+        observeSearchQuery()
+    }
+
+    fun getCartItems(): Flow<List<CartItemUiModel>> {
+        return getAllCartItemsUseCase().map { it.map { cartItemDomainModel -> cartItemDomainModel.toCartItemUiModel() } }
+    }
 
     fun loadFoodAndCategoriesData() {
         _tablesScreenUiState.value = TablesScreenUiState.LoadingScreen(isLoading = true)
-        viewModelScope.launch(dispatcher.io) {
+        viewModelScope.launch(dispatcher.io + handler) {
             try {
                 val foodListDomainModelDeferred = async { fetchFoodListUseCase() }
                 val categoryListDomainDeferred = async { fetchCategoriesListUseCase() }
@@ -101,10 +114,9 @@ class TablesViewModel(
                     isLoading = false,
                     categoriesList = categoriesList
                 )
-                if (filteredFoodList.isEmpty()){
+                if (filteredFoodList.isEmpty()) {
                     _tablesScreenUiState.value = TablesScreenUiState.EmptyState
-                }
-                else {
+                } else {
                     _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(
                         filteredFoodList = filteredFoodList,
                         categoriesList = categoriesList
@@ -129,9 +141,9 @@ class TablesViewModel(
                 .distinctUntilChanged()
                 .collect { query ->
                     if (query.isEmpty()) {
-                        _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(
-                            filteredFoodList = originalFoodList,
-                            categoriesList
+                        _tablesScreenUiState.value = TablesScreenUiState.SearchedFoodsByName(
+                            searchedFoodList = originalFoodList,
+                            categoriesList = categoriesList
                         )
                     } else {
                         try {
@@ -157,10 +169,11 @@ class TablesViewModel(
 
     fun addItemToCart(foodItem: FoodItemUiModel) {
         viewModelScope.launch(dispatcher.io) {
-            cartItems.firstOrNull()?.let { currentCartItems ->
+            getCartItems().firstOrNull()?.let { currentCartItems ->
                 val existingItem = currentCartItems.find { it.id == foodItem.id }
 
-                val cartItem = existingItem?.copy(quantity = existingItem.quantity + 1)?.toCartItemDomainModel()
+                val cartItem = existingItem?.copy(quantity = existingItem.quantity + 1)
+                    ?.toCartItemDomainModel()
                     ?: CartItemDomainModel(
                         id = foodItem.id,
                         name = foodItem.name,

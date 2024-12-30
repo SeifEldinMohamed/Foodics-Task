@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
@@ -44,6 +45,7 @@ fun FoodItem(
 ) {
     Box(
         modifier = Modifier.padding(12.dp)
+            .testTag(stringResource(R.string.test_tag_food_item, foodItemUiModel.id))
     ) {
         Card(
             modifier = Modifier
@@ -93,7 +95,8 @@ fun FoodItem(
                     Modifier
                         .fillMaxWidth()
                         .padding(start = 8.dp, bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Start
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = stringResource(R.string.price),

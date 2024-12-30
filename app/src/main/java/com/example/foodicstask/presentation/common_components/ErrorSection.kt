@@ -49,7 +49,8 @@ fun ErrorSection(
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.background),
+            .background(color = MaterialTheme.colorScheme.background)
+            .testTag(stringResource(R.string.test_tag_error_section)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -61,7 +62,6 @@ fun ErrorSection(
             modifier = Modifier
                 .padding(bottom = 24.dp)
                 .fillMaxWidth()
-                .height(340.dp)
         )
 
         Text(
@@ -79,14 +79,15 @@ fun ErrorSection(
             color = LightGray,
         )
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         OutlinedButton(
             colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent),
             border = BorderStroke(2.dp, LightGreen),
             modifier = Modifier
                 .testTag("RetryButton")
-                .fillMaxWidth(0.8f),
+                .fillMaxWidth(0.8f)
+                .testTag(stringResource(R.string.retry)),
             onClick = {
                 onRefreshButtonClicked()
             }
