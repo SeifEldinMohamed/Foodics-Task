@@ -76,7 +76,7 @@ By covering both unit and UI testing, we aim to provide a reliable user experien
 ## Demo Video
 Light Theme
 <p>
-  <img src="demo_light.gif" height="500" width="250">
+  <img src="demo_light_2.gif" height="500" width="250">
 </p>
 
 Dark Theme
