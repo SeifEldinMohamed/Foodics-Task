@@ -96,15 +96,15 @@ Dark Theme
 # Screen Shots 🖼
 <p align="top">
 <img src = "screenshot/tables_shimmer_light.jpg"  height="400" width = "200">
-<img src = "screenshot/tables_all_light.png"  height="400" width = "200">
+<img src = "screenshot/tables_main_light.jpeg"  height="400" width = "200">
 <img src = "screenshot/tables_brekfast_cart_data_light.jpg" height="400" width = "200">
 <img src = "screenshot/tables_launch_cart_data_light.jpg" height="400" width = "200">
 <br />
 <br />
 <img src = "screenshot/tables_filter_with_empty_results.jpg" height="400" width = "200">
 <img src = "screenshot/tables_search_light_pasta.jpg" height="400" width = "200">
-<img src = "screenshot/tables_no_search_result.jpg" height="400" width = "200">
-<img src = "screenshot/tables_search_keyboard_open.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_pa_keyboard_closed.jpeg" height="400" width = "200">
+<img src = "screenshot/tables_search_no_results_light.jpeg" height="400" width = "200">
 <br />
 <br />
 <img src = "screenshot/tables_error_section.jpg" height="400" width = "200">
@@ -112,5 +112,51 @@ Dark Theme
 <img src = "screenshot/order_light.jpg" height="400" width = "200">
 <img src = "screenshot/settings_light.jpg" height="400" width = "200">
 
+<br />
+<br />
+<img src = "screenshot/tables_shimmer_dark.jpg" height="400" width = "200">
+<img src = "screenshot/tables_dark.jpg" height="400" width = "200">
+<img src = "screenshot/tables_breakfast_filter_dark.jpg" height="400" width = "200">
+<img src = "screenshot/tables_Launch_filter_dark.jpg" height="400" width = "200">
+
+<br />
+<br />
+<img src = "screenshot/tables_filter_no_results_dark.jpeg" height="400" width = "200">
+<img src = "screenshot/tables_search_keyboard_open.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_keyboard_closed.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_no_results_dark.jpeg" height="400" width = "200">
+
+<br />
+<br />
+<img src = "screenshot/tables_error_section_dark.jpg" height="400" width = "200">
+<img src = "screenshot/menu.jpg" height="400" width = "200">
+<img src = "screenshot/orders.jpg" height="400" width = "200">
+<img src = "screenshot/settings.jpg" height="400" width = "200">
+
+<br />
+<br />
+<img src = "screenshot/tablet_animation_light.png" height="550" width = "400">
+<img src = "screenshot/tablet_light.png" height="550" width = "400">
+<br />
+<br />
+<img src = "screenshot/tablet_with_cart_data_light.png" height="550" width = "400">
+<img src = "screenshot/tablet_filter_animation_light.png" height="550" width = "400">
+<br/>
+<br/>
+<img src = "screenshot/tablet_breakfast.png" height="550" width = "400">
+<img src = "screenshot/tablet_launch.png" height="550" width = "400">
+
+<br />
+<br />
+<img src = "screenshot/tablet_animation_dark.png" height="550" width = "400">
+<img src = "screenshot/tablet_dark.png" height="550" width = "400">
+<br/>
+<br/>
+<img src = "screenshot/tablet_with_cart_data_light.png" height="550" width = "400">
+<img src = "screenshot/tablet_animation_dark.png" height="550" width = "400">
+<br/>
+<br/>
+<img src = "screenshot/tablet_breakfast_dark.png" height="550" width = "400">
+<img src = "screenshot/tablet_launch_dark.png" height="550" width = "400">
 <br />
 <br />
