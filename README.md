@@ -1,4 +1,4 @@
-# Food App 🥗 
+# Foodics App 🥗 
 
 This mobile application allows users to search for products, manage orders, and interact with categories. 
 It features an intuitive and responsive design, ensuring smooth navigation even on varying screen sizes. 
@@ -7,36 +7,36 @@ The app stores product and category data locally, ensuring a seamless experience
 
 # Features 📱 
 
-Search Products
-  • Users can search for products by name using an intuitive search bar.
-  • The search dynamically filters products based on the entered text.
-  • Matching results are displayed in real time for a seamless user experience.
+Search Products <br />
+&nbsp;&nbsp;&nbsp;&nbsp;• Users can search for products by name using an intuitive search bar.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• The search dynamically filters products based on the entered text.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• Matching results are displayed in real time for a seamless user experience.<br />
   
-Order Management
-  • Products can be added to the cart by tapping on them directly and saved in database to keep cart data even when user kill the app.
-  • The "View Order" button at the bottom of the screen:
-    • Displays the total price and quantity of products in the cart.
-    • Clears the order when pressed, resetting the cart data for a new order.
-  • Cart data is stored in a Room database, ensuring:
-    • Products and order details persist across search, filter, and navigation.
-    • A consistent experience even after app relaunch.
+Order Management <br />
+• Products can be added to the cart by tapping on them directly and saved in database to keep cart data even when user kill the app.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• The "View Order" button at the bottom of the screen:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Displays the total price and quantity of products in the cart.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Clears the order when pressed, resetting the cart data for a new order.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• Cart data is stored in a Room database, ensuring:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Products and order details persist across search, filter, and navigation.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- A consistent experience even after app relaunch.<br />
     
-API Integration
-  • The app integrates with mock APIs (Mockaroo) to fetch:
-    • Products List
-    • Categorys List
-    • Fetched data is stored in the Room database for offline use.
+API Integration<br />
+  • The app integrates with mock APIs (Mockaroo) to fetch:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;- Products List<br />
+&nbsp;&nbsp;&nbsp;&nbsp;- Categorys List<br />
+&nbsp;&nbsp;&nbsp;&nbsp;- Fetched data is stored in the Room database for offline use.<br />
     
-Design and Responsiveness
-  • Designed exclusively for portrait mode, optimizing the user experience for mobile devices.
-  • UI elements are fully responsive, ensuring:
-    • Consistent layouts across different screen sizes and resolutions.
-    • A visually appealing experience on a variety of Android devices.
+Design and Responsiveness<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• Designed exclusively for portrait mode, optimizing the user experience for mobile devices.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• UI elements are fully responsive, ensuring:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Consistent layouts across different screen sizes and resolutions.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- A visually appealing experience on a variety of Android devices.<br />
     
-Dark Theme Support
-  • The app fully supports Dark Theme, providing:
-    • Enhanced usability in low-light conditions.
-    • A modern and visually pleasing aesthetic for users.
+Dark Theme Support<br />
+&nbsp;&nbsp;&nbsp;&nbsp;• The app fully supports Dark Theme, providing:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Enhanced usability in low-light conditions.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- A modern and visually pleasing aesthetic for users.<br />
 
 
 # Technologies Used 🛠️ 
