@@ -88,9 +88,10 @@ By covering both unit and UI testing, we aim to provide a reliable user experien
 <img src = "screenshot/tables_search_keyboard_open_light.jpg" height="400" width = "200">
 <br />
 <br />
-<img src = "screenshots/tables_error_section.jpg" height="400" width = "200">
-<img src = "screenshots/menu_ligth.jpg" height="800" width = "200">
-<img src = "screenshots/order_light.jpg" height="800" width = "200">
-<img src = "screenshots/settings_light.jpg" height="400" width = "200">
+<img src = "screenshot/tables_error_section.jpg" height="400" width = "200">
+<img src = "screenshot/menu_ligth.jpg" height="800" width = "200">
+<img src = "screenshot/order_light.jpg" height="800" width = "200">
+<img src = "screenshot/settings_light.jpg" height="400" width = "200">
+
 <br />
 <br />
