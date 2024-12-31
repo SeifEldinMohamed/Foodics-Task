@@ -77,20 +77,20 @@ By covering both unit and UI testing, we aim to provide a reliable user experien
 # Screen Shots 🖼
 <p align="top">
 <img src = "screenshot/tables_shimmer_light.jpg"  height="400" width = "200">
-<img src = "screenshot/tables_all_light.jpg"  height="400" width = "200">
+<img src = "screenshot/tables_all_light.png"  height="400" width = "200">
 <img src = "screenshot/tables_brekfast_cart_data_light.jpg" height="400" width = "200">
 <img src = "screenshot/tables_launch_cart_data_light.jpg" height="400" width = "200">
 <br />
 <br />
 <img src = "screenshot/tables_filter_with_empty_results.jpg" height="400" width = "200">
 <img src = "screenshot/tables_search_light_pasta.jpg" height="400" width = "200">
-<img src = "screenshot/tables_no_search_result_light.jpg" height="400" width = "200">
-<img src = "screenshot/tables_search_keyboard_open_light.jpg" height="400" width = "200">
+<img src = "screenshot/tables_no_search_result.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_keyboard_open.jpg" height="400" width = "200">
 <br />
 <br />
 <img src = "screenshot/tables_error_section.jpg" height="400" width = "200">
-<img src = "screenshot/menu_ligth.jpg" height="800" width = "200">
-<img src = "screenshot/order_light.jpg" height="800" width = "200">
+<img src = "screenshot/menu_ligth.jpg" height="400" width = "200">
+<img src = "screenshot/order_light.jpg" height="400" width = "200">
 <img src = "screenshot/settings_light.jpg" height="400" width = "200">
 
 <br />
