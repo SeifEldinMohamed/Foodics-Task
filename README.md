@@ -7,30 +7,39 @@ The app stores product and category data locally, ensuring a seamless experience
 
 # Features 📱 
 
-Search Products:
-
-Users can search for products by name using a search bar.
-The search filters products dynamically based on the entered text, displaying matching results in real time.
-Order Management:
-
-Products can be added to the cart by tapping them directly.
-The "View Order" button at the bottom of the screen displays the total price and quantity of products in the cart.
-When the user presses the "View Order" button, the order is cleared, resetting the cart data for a fresh order.
-Cart data is saved in Room, ensuring that the products and order details are preserved even when searching, filtering, and navigating through different sections of the app.
-Working API Integration:
-
-The app integrates with mock APIs (e.g., Mockaroo) to fetch categories and product data.
-API integration allows the app to display a list of categories and their respective products, which are stored in the Room for offline use.
-Design and Responsiveness:
-
-The app is designed to work in portrait mode only, optimizing user experience for mobile devices.
-UI elements are responsive, adjusting automatically to fit different screen sizes and resolutions, providing a consistent and visually appealing layout across various Android devices.
-
-Support Dark Theme
+Search Products
+  • Users can search for products by name using an intuitive search bar.
+  • The search dynamically filters products based on the entered text.
+  • Matching results are displayed in real time for a seamless user experience.
+  
+Order Management
+  • Products can be added to the cart by tapping on them directly and saved in database to keep cart data even when user kill the app.
+  • The "View Order" button at the bottom of the screen:
+    • Displays the total price and quantity of products in the cart.
+    • Clears the order when pressed, resetting the cart data for a new order.
+  • Cart data is stored in a Room database, ensuring:
+    • Products and order details persist across search, filter, and navigation.
+    • A consistent experience even after app relaunch.
+    
+API Integration
+  • The app integrates with mock APIs (Mockaroo) to fetch:
+    • Products List
+    • Categorys List
+    • Fetched data is stored in the Room database for offline use.
+    
+Design and Responsiveness
+  • Designed exclusively for portrait mode, optimizing the user experience for mobile devices.
+  • UI elements are fully responsive, ensuring:
+    • Consistent layouts across different screen sizes and resolutions.
+    • A visually appealing experience on a variety of Android devices.
+    
+Dark Theme Support
+  • The app fully supports Dark Theme, providing:
+    • Enhanced usability in low-light conditions.
+    • A modern and visually pleasing aesthetic for users.
 
 
 # Technologies Used 🛠️ 
-
 The app is built using modern Android development tools and practices, following the MVVM Clean Architecture pattern. Here's a breakdown of the technologies used:   
 
 • Kotlin<br />
@@ -43,7 +52,6 @@ The app is built using modern Android development tools and practices, following
 • State Flow<br />
 • Coil<br />
 • ROOM<br />
-• Chucker<br />
 • Lottie Animation<br />
 • Junit<br />
 • Mockk<br />
@@ -70,10 +78,10 @@ Implemented unit tests for almost all features and scenarios of the application.
 These tests cover core business logic, data transformations, and edge cases to ensure the app behaves as expected across different use cases.
 
 • **UI Tests** <br />
-The project also includes extensive UI test cases for the Home Screen using Jetpack Compose Testing.
+The project also includes extensive UI test cases for the Tables Screen using Jetpack Compose Testing.
 By covering both unit and UI testing, we aim to provide a reliable user experience and maintain the app's quality over time.
 
-## Demo Video
+## Demo Videos 🎬
 Light Theme
 <p>
   <img src="demo_light_2.gif">
