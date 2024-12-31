@@ -73,6 +73,17 @@ These tests cover core business logic, data transformations, and edge cases to e
 The project also includes extensive UI test cases for the Home Screen using Jetpack Compose Testing.
 By covering both unit and UI testing, we aim to provide a reliable user experience and maintain the app's quality over time.
 
+## Demo Video
+Light Theme
+<p>
+  <img src="demo_light.gif" height="500" width="250">
+</p>
+
+Dark Theme
+<p>
+  <img src="demo_gif/demo_dark.gif" height="500" width="250">
+</p>
+
 
 # Screen Shots 🖼
 <p align="top">
