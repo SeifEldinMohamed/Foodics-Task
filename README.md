@@ -76,19 +76,21 @@ By covering both unit and UI testing, we aim to provide a reliable user experien
 
 # Screen Shots 🖼
 <p align="top">
-<img src = "screenshots/home_shimmer.jpg"  height="400" width = "200">
-<img src = "screenshots/home.jpg" height="400" width = "200">
-<img src = "screenshots/home_error.jpg" height="400" width = "200">
+<img src = "screenshot/tables_shimmer_light.jpg"  height="400" width = "200">
+<img src = "screenshot/tables_all_light.jpg"  height="400" width = "200">
+<img src = "screenshot/tables_brekfast_cart_data_light.jpg" height="400" width = "200">
+<img src = "screenshot/tables_launch_cart_data_light.jpg" height="400" width = "200">
 <br />
 <br />
-<img src = "screenshots/search_keyboard.jpg" height="400" width = "200">
-<img src = "screenshots/search_no_keyboard.jpg" height="400" width = "200">
-<img src = "screenshots/home_empty.jpg" height="400" width = "200">
+<img src = "screenshot/tables_filter_with_empty_results.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_light_pasta.jpg" height="400" width = "200">
+<img src = "screenshot/tables_no_search_result_light.jpg" height="400" width = "200">
+<img src = "screenshot/tables_search_keyboard_open_light.jpg" height="400" width = "200">
 <br />
 <br />
-<img src = "screenshots/details_shimmer.jpg" height="400" width = "200">
-<img src = "screenshots/details_screen.jpg" height="800" width = "200">
-<img src = "screenshots/details_favorite.jpg" height="800" width = "200">
-<img src = "screenshots/home_fav.jpg" height="400" width = "200">
+<img src = "screenshots/tables_error_section.jpg" height="400" width = "200">
+<img src = "screenshots/menu_ligth.jpg" height="800" width = "200">
+<img src = "screenshots/order_light.jpg" height="800" width = "200">
+<img src = "screenshots/settings_light.jpg" height="400" width = "200">
 <br />
 <br />
