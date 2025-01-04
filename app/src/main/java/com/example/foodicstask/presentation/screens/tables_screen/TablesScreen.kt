@@ -93,6 +93,7 @@ fun TablesContent(
             is TablesScreenUiState.FilteredFoodsByCategory -> tablesUiState.categoriesList
             is TablesScreenUiState.SearchedFoodsByName -> tablesUiState.categoriesList
             is TablesScreenUiState.LoadingFoodList -> tablesUiState.categoriesList
+            is TablesScreenUiState.EmptyState -> tablesUiState.categoryList
             else -> emptyList()
         }
     }
@@ -208,15 +209,16 @@ fun TablesContent(
 
             }
         }
-
-        ViewOrderButton(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            totalCount = totalCount.toString(),
-            totalPrice = totalPrice.toTwoDecimalPlaces().toString(),
-            onClick = {
-                onClearCart()
-            },
-        )
+        if (tablesUiState !is TablesScreenUiState.ApiError && tablesUiState !is TablesScreenUiState.DatabaseError) {
+            ViewOrderButton(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                totalCount = totalCount.toString(),
+                totalPrice = totalPrice.toTwoDecimalPlaces().toString(),
+                onClick = {
+                    onClearCart()
+                },
+            )
+        }
     }
 
 }

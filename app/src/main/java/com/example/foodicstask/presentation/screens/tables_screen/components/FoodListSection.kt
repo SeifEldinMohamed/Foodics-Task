@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -30,7 +31,7 @@ fun ColumnScope.FoodListSection(
 ) {
 
     val keyboardHeight =
-        with(LocalDensity.current) { insets.getBottom(LocalDensity.current).toDp() } / 2
+        with(LocalDensity.current) { insets.getBottom(LocalDensity.current).toDp() }
     val cartItemsMap = cartItems.associateBy { it.id }
     LazyVerticalGrid(
         columns = GridCells.Fixed(gridCellsCount),
@@ -43,6 +44,7 @@ fun ColumnScope.FoodListSection(
         modifier = Modifier
             .weight(1f)
             .background(MaterialTheme.colorScheme.surfaceVariant)
+            .navigationBarsPadding()
     ) {
         items(foodList) { foodItem ->
             FoodItem(
