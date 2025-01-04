@@ -115,7 +115,7 @@ class TablesViewModel(
                     categoriesList = categoriesList
                 )
                 if (filteredFoodList.isEmpty()) {
-                    _tablesScreenUiState.value = TablesScreenUiState.EmptyState
+                    _tablesScreenUiState.value = TablesScreenUiState.EmptyState(categoryList = categoriesList)
                 } else {
                     _tablesScreenUiState.value = TablesScreenUiState.FilteredFoodsByCategory(
                         filteredFoodList = filteredFoodList,
@@ -149,7 +149,7 @@ class TablesViewModel(
                         try {
                             val searchedFoods = searchFoodListByNameUseCase(name = query)
                             if (searchedFoods.isEmpty()) {
-                                _tablesScreenUiState.value = TablesScreenUiState.EmptyState
+                                _tablesScreenUiState.value = TablesScreenUiState.EmptyState(categoryList = categoriesList)
                             } else {
                                 _tablesScreenUiState.value =
                                     TablesScreenUiState.SearchedFoodsByName(
